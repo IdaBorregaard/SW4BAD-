@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AarhusSpaceProgram.Models;
+namespace assignment3.Entities;
 
 public enum MissionType
 {

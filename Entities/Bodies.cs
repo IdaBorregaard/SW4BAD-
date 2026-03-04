@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace AarhusSpaceProgram.Models;
+namespace assignment3.Entities;
 
 public enum PlanetType
 {
@@ -24,16 +24,10 @@ public class Bodies
     // Relationer
 
     public List<Mission> TargetBody {get; set;} = null!;
-}
 
+    public string? ParentPlanetName {get; set;}
 
+    public Bodies? ParentPlanet {get; set;}
 
-public class Planet : Bodies
-{
-    public PlanetType Type {get; set;}
-}
-
-public class Moon : Bodies
-{
-    public Planet? ParentPlanet {get; set;}
+    public List<Bodies> Moons {get; set;} = new();
 }

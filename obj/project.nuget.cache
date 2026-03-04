@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "YfH9sXmitFE=",
+  "dgSpecHash": "RkbzUatb+3c=",
   "success": true,
   "projectFilePath": "/Users/idaborregaard/Desktop/sw4bad/sw4bad-individual-assignments/assignment3/assignment3.csproj",
   "expectedPackageFiles": [
@@ -25,6 +25,7 @@
     "/Users/idaborregaard/.nuget/packages/microsoft.entityframeworkcore.design/10.0.3/microsoft.entityframeworkcore.design.10.0.3.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/microsoft.entityframeworkcore.relational/10.0.3/microsoft.entityframeworkcore.relational.10.0.3.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/microsoft.entityframeworkcore.sqlserver/10.0.3/microsoft.entityframeworkcore.sqlserver.10.0.3.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/microsoft.entityframeworkcore.tools/10.0.3/microsoft.entityframeworkcore.tools.10.0.3.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/microsoft.extensions.dependencymodel/10.0.3/microsoft.extensions.dependencymodel.10.0.3.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/microsoft.identity.client/4.73.1/microsoft.identity.client.4.73.1.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/microsoft.identity.client.extensions.msal/4.73.1/microsoft.identity.client.extensions.msal.4.73.1.nupkg.sha512",

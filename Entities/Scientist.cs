@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace AarhusSpaceProgram.Models;
+namespace assignment3.Entities;
 
 
 public class Scientist
@@ -17,6 +17,6 @@ public class Scientist
     // Relationer
     public Staff Staff {get; set;} = null!;
 
-    public List<Mission> AstronautMission {get; set;} = new();
+    public List<Mission> ScientistMission {get; set;} = new();
 
 }

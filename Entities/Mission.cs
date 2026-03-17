@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace assignment3.Entities;
 
+// Enumeration for the type of mission, which can be either Orbit, Landing, or Flyby.
 public enum MissionType
 {
     Orbit,
@@ -9,44 +10,30 @@ public enum MissionType
     Flyby
 }
 
+// This class represents a space mission and its constraints and relations to other entities.
 public class Mission
 {
     [Key]
-    public required string Name {get; set;}
+    public required string Name {get; set;} // Primary key, name of the mission
+    public DateTime LaunchDate {get; set;} // Date of the mission launch 
+    public float Duration {get; set;} // Duration of the mission in days
+    public required string Status {get; set;} // Status of the mission (e.g., Planned, Ongoing, Completed, etc.)
+    public MissionType Type {get; set;} // Type of the mission - the enumeration defined above
+    public required string RocketId {get; set;} // Foreign key to reference the rocket used for the mission
+    public required string LaunchLocation {get; set;} // Foreign key to reference the launch pad used for the mission
+    public required string CelestialDest {get; set;} // Foreign key to reference the celestial body that is the target of the mission
+    public int ManagerId {get; set;} // Foreign key to reference the manager responsible for the mission
 
-    public DateTime LaunchDate {get; set;}
+    // Relations to other entities
+    public Manager ManagedBy {get; set;} = null!; // 1:N relation
 
-    public float Duration {get; set;}
+    public List<Astronaut> Crew {get; set;} = null!; // 1:N relation
 
-    public required string Status {get; set;}
+    public List<Scientist> Scientists {get; set;} = null!; // 1:N relation
 
-    public MissionType Type {get; set;}
+    public Rocket Rocket {get; set;} = null!; // 1:1 relation
 
-    public required string RocketId {get; set;}
+    public LaunchPad LaunchPad {get; set;} = null!; // 1:N relation
 
-    public required string LaunchLocation {get; set;}
-
-    public required string CelestialDest {get; set;}
-
-    // Staff
-    public int ManagerId {get; set;}
-
-    public int CrewId {get; set;}
-
-    public int ScientistId {get; set;}
-
-    // Relation
-
-    public Manager ManagedBy {get; set;} = null!;
-
-    public List<Astronaut> Crew {get; set;} = null!;
-
-    public List<Scientist> Scientists {get; set;} = null!;
-
-    public Rocket Rocket {get; set;} = null!;
-
-    public LaunchPad LaunchPad {get; set;} = null!;
-
-    public Bodies CelestialBody {get; set;} = null!;
-
+    public Bodies CelestialBody {get; set;} = null!; // 1:N relation
 }

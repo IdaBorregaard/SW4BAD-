@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace assignment3.Entities;
@@ -6,8 +7,8 @@ namespace assignment3.Entities;
 // This class represents a scientist involved in space missions.
 public class Scientist
 {
-    [Key]
-    public int StaffId {get; set;} // Primary key
+    [Key, ForeignKey("Staff")] // The primary key of Scientist is also a foreign key referencing the Staff entity
+    public int StaffId {get; set;}
     public string Title {get; set;} = null!; // Title of the scientist (e.g., Dr., Prof., etc.)
     public string Speciality {get; set;} = null!; // Area of expertise or speciality of the scientist
     

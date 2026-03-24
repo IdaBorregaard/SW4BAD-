@@ -20,7 +20,7 @@ public class AarhusSpaceContext : DbContext
     public DbSet<Manager> Managers { get; set; } = null!;
     public DbSet<Astronaut> Astronauts { get; set; } = null!;
     public DbSet<LaunchPad> LaunchPads { get; set; } = null!;
-    public DbSet<Bodies> Bodies { get; set; } = null!;
+    public DbSet<CelestialBody> Bodies { get; set; } = null!;
     public DbSet<Mission> Missions { get; set; } = null!;
     public DbSet<Rocket> Rockets { get; set; } = null!;
     public DbSet<Scientist> Scientists { get; set; } = null!;
@@ -77,9 +77,9 @@ public class AarhusSpaceContext : DbContext
         // 1:N - Mission has one CelestialBody, but a CelestialBody can be the target of many Missions
         modelBuilder.Entity<Mission>()
             .HasOne(m => m.CelestialBody) 
-            .WithMany(b => b.TargetBody);
+            .WithMany(b => b.TargetMissions);
 
-        modelBuilder.Entity<Bodies>()
+        modelBuilder.Entity<CelestialBody>()
             .HasOne(b => b.ParentPlanet)        // Moon has one parent (planet)
             .WithMany(p => p.Moons)             // Planet has many moons
             .HasForeignKey(b => b.ParentPlanetName) // String name as FK
@@ -137,25 +137,26 @@ public class AarhusSpaceContext : DbContext
 
 
         // Celestial Bodies - Recursive relation (Parent-Child) for Planets and Moons
-        modelBuilder.Entity<Bodies>().HasData(
+        modelBuilder.Entity<CelestialBody>().HasData(
             // Planets - Parent
-            new Bodies { Name = "Earth", Dist = 1.0f, BodyType = PlanetType.Rocky},
-            new Bodies { Name = "Jupiter", Dist = 5.20f, BodyType = PlanetType.GasGiant},
+            new CelestialBody { Name = "Earth", Dist = 1.0f, BodyType = PlanetType.Rocky},
+            new CelestialBody { Name = "Jupiter", Dist = 5.20f, BodyType = PlanetType.GasGiant},
             
 
             // Moons - Child
-            new Bodies { Name = "Lunar", Dist = 1.002f, BodyType = PlanetType.Moon, ParentPlanetName = "Earth"},
-            new Bodies { Name = "Europa", Dist = 5.201f, BodyType = PlanetType.Moon, ParentPlanetName = "Jupiter"}
+            new CelestialBody { Name = "Lunar", Dist = 1.002f, BodyType = PlanetType.Moon, ParentPlanetName = "Earth"},
+            new CelestialBody { Name = "Europa", Dist = 5.201f, BodyType = PlanetType.Moon, ParentPlanetName = "Jupiter"}
         );
 
 
         // Missions
         modelBuilder.Entity<Mission>().HasData(
-            new Mission { 
+            new Mission {
+                MissionId = 1,
                 Name = "Mission X", 
                 LaunchDate = new DateTime(2034, 03, 16, 9, 0, 0), 
                 Duration = 27.0f, 
-                Status = "Planning", 
+                Status = MissionStatus.Planned, 
                 Type = MissionType.Landing, 
                 // Foreign Keys (These must match the [Key] of the connected tables!)
                 RocketId = "SN-01", 
@@ -164,11 +165,12 @@ public class AarhusSpaceContext : DbContext
                 ManagerId = 2
                 },
             
-            new Mission { 
+            new Mission {
+                MissionId = 2, 
                 Name = "Apollo 11", 
                 LaunchDate = new DateTime(2045, 07, 1, 10, 0, 0), 
                 Duration = 14.5f, 
-                Status = "Planning", 
+                Status = MissionStatus.Planned, 
                 Type = MissionType.Flyby, 
                 // Foreign Keys (These must match the [Key] of the connected tables!)
                 RocketId = "SN-02", 

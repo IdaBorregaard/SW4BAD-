@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace assignment3.Entities;
 
 // This class represents an astronaut involved in space missions.
 public class Astronaut
 {
-    [Key]
+    [Key, ForeignKey("Staff")]
     public int StaffId {get; set;} // Primary key
-    required public string Rank {get; set;} // Rank of the astronaut (e.g., Commander, Pilot, Mission Specialist, etc.)
+    public required string Rank {get; set;} // Rank of the astronaut (e.g., Commander, Pilot, Mission Specialist, etc.)
     public float ExperienceSim {get; set;} // Experience in space simulations in hours
     public float ExperienceSpace {get; set;} // Experience in actual space missions in hours
 

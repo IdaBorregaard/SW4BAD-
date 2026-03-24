@@ -1,12 +1,12 @@
-using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations; // Needed for [Key] attribute
+using System.ComponentModel.DataAnnotations.Schema; // Needed for [ForeignKey] attribute
 
 namespace assignment3.Entities;
 
 // This class represents a manager involved in space missions.
 public class Manager
 {
-    [Key]
+    [Key, ForeignKey("Staff")] 
     public int StaffId {get; set;} // Primary key
     public required string Department {get; set;} // Department the manager is responsible for
 

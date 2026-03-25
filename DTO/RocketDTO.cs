@@ -19,8 +19,14 @@ public class RocketCreateDTO
     // We include ID here because it's a string identifier provided by the user
     public required string RocketId { get; set; } 
     public required string Name { get; set; }
+
+    [Range(0, float.MaxValue, ErrorMessage = "Weight must be a non-negative value.")]
     public float Weight { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Fuel capacity must be a non-negative value.")]
     public int FuelCap { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Payload capacity must be a non-negative value.")]
     public int Payload { get; set; }
     public int Stages { get; set; }
     public int CrewCap { get; set; }
@@ -30,8 +36,14 @@ public class RocketUpdateDTO
 {
     // RocketId is usually not changeable, so we leave it out
     public required string Name { get; set; }
+
+    [Range(0, float.MaxValue, ErrorMessage = "Weight must be a non-negative value.")]
     public float Weight { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Fuel capacity must be a non-negative value.")]
     public int FuelCap { get; set; }
+
+    [Range(0, int.MaxValue, ErrorMessage = "Payload capacity must be a non-negative value.")]
     public int Payload { get; set; }
     public int Stages { get; set; }
     public int CrewCap { get; set; }

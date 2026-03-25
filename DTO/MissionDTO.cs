@@ -14,7 +14,9 @@ public class MissionDTO
     public MissionType Type {get; set;} // Type of the mission - the enumeration defined above
     
     // From other entites
-    public string RocketId {get; set;} = null!; // Foreign key to reference the rocket used for the mission
+    public string? RocketId {get; set;} // Foreign key to reference the rocket used for the mission
+    public string? RocketName {get; set;} // Name of the rocket used for the mission
+    
     public string LaunchLocation {get; set;} = null!; // Foreign key to reference the launch pad used for the mission
     public string CelestialDest {get; set;} = null!; // Foreign key to reference the celestial body that is the target of the mission
     
@@ -34,10 +36,10 @@ public class MissionCreateDTO
     public DateTime LaunchDate { get; set; }
     public float Duration { get; set; }
     public MissionType Type { get; set; }
-    public MissionStatus Status { get; set; }
+    public MissionStatus Status { get; set; } = MissionStatus.Created; // Default to Created when a mission is first created
     
     // Hardware/Location links
-    public required string RocketId { get; set; }
+    public string? RocketId { get; set; }
     public required string LaunchLocation { get; set; }
     public required string CelestialDest { get; set; }
 
@@ -53,4 +55,13 @@ public class MissionUpdateDTO
     public DateTime LaunchDate { get; set; }
     public float Duration { get; set; }
     public int? ManagerId { get; set; }
+
+}
+
+public class AssignStaffDTO
+{
+    public int? ManagerId { get; set; }
+    public List<int> AstronautIds { get; set; } = new();
+    public List<int> ScientistIds { get; set; } = new();
+    public string? RocketId { get; set; }
 }

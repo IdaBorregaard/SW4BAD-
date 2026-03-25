@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    # Use Azure SQL Edge for Apple Silicon support
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrongP@ssword123! # Note: some images prefer MSSQL_SA_PASSWORD
+    ports:
+      - "1433:1433"
+
+  # 2. Add MongoDB for Requirement E
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"

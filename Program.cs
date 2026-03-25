@@ -3,8 +3,24 @@ using assignment3.Data;
 using assignment3.Entities;
 using assignment3.DTO;
 using assignment3.Endpoints;
+using Scalar.AspNetCore;
+using Microsoft.Extensions.Options;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// The ?? operator says: "If the config is missing, use this default string instead."
+var mongoDbConnection = builder.Configuration.GetConnectionString("MongoLogConnection") 
+    ?? "mongodb://localhost:27017/SpaceMissionLogs";
+
+// Configure Serilog to write to MongoDB
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.MongoDB(mongoDbConnection, collectionName: "ApiLogs")
+    .CreateLogger();
+
+builder.Host.UseSerilog(); // Tell .NET to use Serilog instead of the default logger
 
 // 1. Registrering af Services
 builder.Services.AddEndpointsApiExplorer();
@@ -18,6 +34,12 @@ builder.Services.AddDbContext<AarhusSpaceContext>(options =>
 var app = builder.Build();
 
 app.MapOpenApi("/openapi/v1.json");
+
+if (app.Environment.IsDevelopment())
+{
+    // In Scalar v2.0+, pass the URL string directly!
+    app.MapScalarApiReference("/scalar");
+}
 
 // CRUD endpoints for every entity
 
@@ -43,7 +65,24 @@ app.MapMissionsEndpoints();
 app.MapBodiesEndpoints();
 
 
-// Query endpoints
+// Custom Middleware to log POST, PUT, DELETE requests
+app.Use(async (context, next) =>
+{
+    // Let the request happen first so we can get the Response Status Code
+    await next(context);
+
+    var method = context.Request.Method;
+
+    // Only log if it is a POST, PUT, or DELETE
+    if (method == HttpMethods.Post || method == HttpMethods.Put || method == HttpMethods.Delete)
+    {
+        Log.Information("API Request Logged | Method: {Method} | Path: {Path} | Status: {StatusCode} | Timestamp: {Timestamp}",
+            method,
+            context.Request.Path,
+            context.Response.StatusCode,
+            DateTime.UtcNow);
+    }
+});
 
 
 app.Run();

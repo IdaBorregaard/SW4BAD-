@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "RkbzUatb+3c=",
+  "dgSpecHash": "m/+Cq4/zFKU=",
   "success": true,
   "projectFilePath": "/Users/idaborregaard/Desktop/sw4bad/sw4bad-individual-assignments/assignment3/assignment3.csproj",
   "expectedPackageFiles": [
     "/Users/idaborregaard/.nuget/packages/azure.core/1.47.1/azure.core.1.47.1.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/azure.identity/1.14.2/azure.identity.1.14.2.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/dnsclient/1.6.1/dnsclient.1.6.1.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/microsoft.aspnetcore.openapi/10.0.2/microsoft.aspnetcore.openapi.10.0.2.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/microsoft.bcl.asyncinterfaces/8.0.0/microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
@@ -38,8 +39,24 @@
     "/Users/idaborregaard/.nuget/packages/microsoft.openapi/2.0.0/microsoft.openapi.2.0.0.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/microsoft.sqlserver.server/1.0.0/microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/microsoft.visualstudio.solutionpersistence/1.0.52/microsoft.visualstudio.solutionpersistence.1.0.52.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/mongodb.bson/3.0.0/mongodb.bson.3.0.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/mongodb.driver/3.0.0/mongodb.driver.3.0.0.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/scalar.aspnetcore/2.13.15/scalar.aspnetcore.2.13.15.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog/4.3.0/serilog.4.3.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog.aspnetcore/10.0.0/serilog.aspnetcore.10.0.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog.extensions.hosting/10.0.0/serilog.extensions.hosting.10.0.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog.extensions.logging/10.0.0/serilog.extensions.logging.10.0.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog.formatting.compact/3.0.0/serilog.formatting.compact.3.0.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog.settings.configuration/10.0.0/serilog.settings.configuration.10.0.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog.sinks.console/6.1.1/serilog.sinks.console.6.1.1.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog.sinks.debug/3.0.0/serilog.sinks.debug.3.0.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog.sinks.file/7.0.0/serilog.sinks.file.7.0.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog.sinks.mongodb/7.2.0/serilog.sinks.mongodb.7.2.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/serilog.sinks.periodicbatching/3.1.0/serilog.sinks.periodicbatching.3.1.0.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/sharpcompress/0.30.1/sharpcompress.0.30.1.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/snappier/1.0.0/snappier.1.0.0.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/system.clientmodel/1.5.1/system.clientmodel.1.5.1.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/system.codedom/6.0.0/system.codedom.6.0.0.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/system.composition/9.0.0/system.composition.9.0.0.nupkg.sha512",
@@ -52,7 +69,8 @@
     "/Users/idaborregaard/.nuget/packages/system.identitymodel.tokens.jwt/7.7.1/system.identitymodel.tokens.jwt.7.7.1.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/system.memory.data/8.0.1/system.memory.data.8.0.1.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/system.security.cryptography.pkcs/9.0.4/system.security.cryptography.pkcs.9.0.4.nupkg.sha512",
-    "/Users/idaborregaard/.nuget/packages/system.security.cryptography.protecteddata/9.0.4/system.security.cryptography.protecteddata.9.0.4.nupkg.sha512"
+    "/Users/idaborregaard/.nuget/packages/system.security.cryptography.protecteddata/9.0.4/system.security.cryptography.protecteddata.9.0.4.nupkg.sha512",
+    "/Users/idaborregaard/.nuget/packages/zstdsharp.port/0.7.3/zstdsharp.port.0.7.3.nupkg.sha512"
   ],
   "logs": []
 }

@@ -51,7 +51,6 @@ public static class ScientistEndpoints
         app.MapGet("/api/scientists", async (AarhusSpaceContext db) =>
         {
             var scientists = await db.Scientists
-            .Include(s => s.Staff)
             .Select(s => new ScientistDTO
             {
                 StaffId = s.StaffId,
@@ -69,7 +68,6 @@ public static class ScientistEndpoints
         app.MapGet("/api/scientists/{id}", async (int id, AarhusSpaceContext db) =>
         {
             var scientist = await db.Scientists
-            .Include(s => s.Staff)
             .Where(s => s.StaffId == id)
             .Select(s => new ScientistDTO
             {

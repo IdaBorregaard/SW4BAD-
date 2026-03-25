@@ -63,6 +63,18 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[10.0.3, )"
+            },
+            "Scalar.AspNetCore": {
+              "target": "Package",
+              "version": "[2.13.15, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Sinks.MongoDB": {
+              "target": "Package",
+              "version": "[7.2.0, )"
             }
           },
           "imports": [

@@ -50,7 +50,6 @@ public static class ManagerEndpoints
         app.MapGet("/api/managers", async (AarhusSpaceContext db) =>
         {
             var managers = await db.Managers
-            .Include(m => m.Staff)
             .Select(m => new ManagerDTO
             {
                 StaffId = m.StaffId,
@@ -67,7 +66,6 @@ public static class ManagerEndpoints
         app.MapGet("/api/managers/{id}", async (int id, AarhusSpaceContext db) =>
         {
             var manager = await db.Managers
-            .Include(m => m.Staff)
             .Where(m => m.StaffId == id)
             .Select(m => new ManagerDTO
             {

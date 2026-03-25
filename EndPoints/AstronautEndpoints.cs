@@ -52,8 +52,6 @@ app.MapPost("/api/astronauts", async (AstronautCreateDTO createDTO, AarhusSpaceC
 app.MapGet("/api/astronauts", async (AarhusSpaceContext db) =>
 {
     var astronauts = await db.Astronauts
-    .Include(a => a.Staff)
-    .Include(a => a.AstronautMission)
     .OrderByDescending(a => a.ExperienceSpace)
     .Select(a => new AstronautDTO
     {
@@ -74,7 +72,6 @@ app.MapGet("/api/astronauts", async (AarhusSpaceContext db) =>
 app.MapGet("/api/astronauts/{id}", async (int id, AarhusSpaceContext db) =>
 {
     var astronaut = await db.Astronauts
-    .Include(a => a.Staff)
     .Where(a => a.StaffId == id)
     .Select(a => new AstronautDTO
     {

@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace assignment3.Entities;
 
@@ -15,6 +15,8 @@ public class Staff
     [StringLength(100)] 
     public required string Name {get; set;} // Name of the staff member, required and with a maximum length of 100 characters
    // public required string Role {get; set;}
+
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public required DateTime HireDate {get; set;} // Date when the staff member was hired, required
     public int PayGrade {get; set;} // Pay grade of the staff member
 

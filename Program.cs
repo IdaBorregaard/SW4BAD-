@@ -15,9 +15,7 @@ var mongoDbConnection = builder.Configuration.GetConnectionString("MongoLogConne
 
 // Configure Serilog to write to MongoDB
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .WriteTo.Console()
-    .WriteTo.MongoDB(mongoDbConnection, collectionName: "ApiLogs")
+    .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
 
 builder.Host.UseSerilog(); // Tell .NET to use Serilog instead of the default logger

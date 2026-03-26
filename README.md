@@ -41,7 +41,7 @@ Initialize the SQL Server and MongoDB containers using the provided Docker Compo
 
 ### Step 2: Database Initialization
 Apply Entity Framework Migrations to synchronize the relational schema and execute data seeding:
-```dotnet ef database updat```
+```dotnet ef database update```
 
 ### Step 3: Application Execution
 Launch the API server:

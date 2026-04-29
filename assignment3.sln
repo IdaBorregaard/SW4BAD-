@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "assignment3", "assignment3.csproj", "{445712D3-4787-EC12-6527-C4AB6CFE05EE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MissionLogService", "MissionLogService\MissionLogService.csproj", "{F789A021-F223-4B0F-BF2A-4780E893E63E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AarhusSpaceProgram", "AarhusSpaceProgram", "{DF6360D5-1152-D0BC-CE09-BA99B1051668}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "assignment3", "AarhusSpaceProgram\assignment3.csproj", "{B97AF6BB-E659-4E6E-930F-6D7645623F92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,18 +19,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Debug|x64.Build.0 = Debug|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Debug|x86.Build.0 = Debug|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Release|x64.ActiveCfg = Release|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Release|x64.Build.0 = Release|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Release|x86.ActiveCfg = Release|Any CPU
-		{445712D3-4787-EC12-6527-C4AB6CFE05EE}.Release|x86.Build.0 = Release|Any CPU
 		{F789A021-F223-4B0F-BF2A-4780E893E63E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F789A021-F223-4B0F-BF2A-4780E893E63E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F789A021-F223-4B0F-BF2A-4780E893E63E}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -41,9 +31,24 @@ Global
 		{F789A021-F223-4B0F-BF2A-4780E893E63E}.Release|x64.Build.0 = Release|Any CPU
 		{F789A021-F223-4B0F-BF2A-4780E893E63E}.Release|x86.ActiveCfg = Release|Any CPU
 		{F789A021-F223-4B0F-BF2A-4780E893E63E}.Release|x86.Build.0 = Release|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Debug|x64.Build.0 = Debug|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Debug|x86.Build.0 = Debug|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Release|x64.ActiveCfg = Release|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Release|x64.Build.0 = Release|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Release|x86.ActiveCfg = Release|Any CPU
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B97AF6BB-E659-4E6E-930F-6D7645623F92} = {DF6360D5-1152-D0BC-CE09-BA99B1051668}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {39741ACC-D53B-42BB-8CF6-F568735BC563}

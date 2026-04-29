@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "g/T2V3jw/o4=",
+  "dgSpecHash": "DFjeVv0q7tw=",
   "success": true,
-  "projectFilePath": "/Users/idaborregaard/Desktop/sw4bad/sw4bad-individual-assignments/assignment3/assignment3.csproj",
+  "projectFilePath": "/Users/idaborregaard/Desktop/sw4bad/sw4bad-individual-assignments/assignment3/AarhusSpaceProgram/assignment3.csproj",
   "expectedPackageFiles": [
     "/Users/idaborregaard/.nuget/packages/azure.core/1.47.1/azure.core.1.47.1.nupkg.sha512",
     "/Users/idaborregaard/.nuget/packages/azure.identity/1.14.2/azure.identity.1.14.2.nupkg.sha512",

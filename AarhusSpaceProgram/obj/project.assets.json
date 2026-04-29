@@ -3900,11 +3900,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/idaborregaard/Desktop/sw4bad/sw4bad-individual-assignments/assignment3/assignment3.csproj",
+      "projectUniqueName": "/Users/idaborregaard/Desktop/sw4bad/sw4bad-individual-assignments/assignment3/AarhusSpaceProgram/assignment3.csproj",
       "projectName": "assignment3",
-      "projectPath": "/Users/idaborregaard/Desktop/sw4bad/sw4bad-individual-assignments/assignment3/assignment3.csproj",
+      "projectPath": "/Users/idaborregaard/Desktop/sw4bad/sw4bad-individual-assignments/assignment3/AarhusSpaceProgram/assignment3.csproj",
       "packagesPath": "/Users/idaborregaard/.nuget/packages/",
-      "outputPath": "/Users/idaborregaard/Desktop/sw4bad/sw4bad-individual-assignments/assignment3/obj/",
+      "outputPath": "/Users/idaborregaard/Desktop/sw4bad/sw4bad-individual-assignments/assignment3/AarhusSpaceProgram/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/idaborregaard/.nuget/NuGet/NuGet.Config"

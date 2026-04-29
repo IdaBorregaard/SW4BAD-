@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    # Use Azure SQL Edge for Apple Silicon support
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrongP@ssword123! # Note: some images prefer MSSQL_SA_PASSWORD
+    ports:
+      - "1433:1433"
+
+  # 2. Add MongoDB
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+  
+  # 3. Add the web API service
+  webapi:
+    build:
+      context: ./AarhusSpaceProgram
+      dockerfile: Dockerfile
+    ports:
+      - "5011:8080"
+      # Pass all necessary environment variables for both SQL Server and MongoDB connections, as well as JWT settings
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=AarhusSpaceDB;User Id=sa;Password=YourStrongP@ssword123!;TrustServerCertificate=True;Encrypt=False;
+      - ConnectionStrings__MongoLogConnection=mongodb://mongodb:27017/SpaceMissionLogs
+      - MongoDB__ConnectionString=mongodb://mongodb:27017
+      - MongoDB__DatabaseName=SpaceMissionLogs
+      - JwtSettings__Secret=YourSuperSecretKeyThatIsAtLeast32CharsLong!
+      - JwtSettings__Issuer=AarhusSpaceProgram
+      - JwtSettings__Audience=AarhusSpaceProgram
+    # Ensure the web API waits for both the SQL Server and MongoDB services to be ready before starting
+    depends_on:
+      - db
+      - mongodb
+
+  # 4. Add the MissionLogService
+  missionlogservice:
+    build:
+      context: ./MissionLogService
+      dockerfile: Dockerfile
+    environment:
+       - MongoDB__ConnectionString=mongodb://mongodb:27017
+       - MongoDB__DatabaseName=SpaceMissionLogs
+       - WebApi__BaseUrl=http://webapi:8080/
+    # Ensure the MissionLogService waits for MongoDB and the web API to be ready before starting
+    depends_on:
+      - mongodb
+      - webapi

@@ -29,7 +29,7 @@ builder.Host.UseSerilog(); // Tell .NET to use Serilog instead of the default lo
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
-// Her forbinder vi din DbContext
+// Entity Framework Core setup with SQL Server, using the connection string from appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AarhusSpaceContext>(options =>
     options.UseSqlServer(connectionString));
@@ -68,11 +68,8 @@ var app = builder.Build();
 
 app.MapOpenApi("/openapi/v1.json");
 
-if (app.Environment.IsDevelopment())
-{
-    // In Scalar v2.0+, pass the URL string directly!
-    app.MapScalarApiReference("/scalar");
-}
+// In Scalar v2.0+, pass the URL string directly!
+app.MapScalarApiReference("/scalar");
 
 // CRUD endpoints for every entity
 
@@ -107,6 +104,9 @@ app.MapBodiesEndpoints();
 // CRUD endpoints for Experiments
 app.MapExperimentEndpoints();
 
+// CRUD endpoints for Logs
+app.MapMissionLogEndpoints();
+
 
 // Custom Middleware to log POST, PUT, DELETE requests
 app.Use(async (context, next) =>
@@ -126,6 +126,13 @@ app.Use(async (context, next) =>
             DateTime.UtcNow);
     }
 });
+
+// Apply migrations automatically on startup
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AarhusSpaceContext>();
+    db.Database.Migrate();
+}
 
 // Seed users and roles
 using (var scope = app.Services.CreateScope())

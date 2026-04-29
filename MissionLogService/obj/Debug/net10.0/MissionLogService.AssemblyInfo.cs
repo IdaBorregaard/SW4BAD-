@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MissionLogService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+14f3ada20f9609551ec322dc7a754407674b1f07")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+afba96a42a948d20e662036449d1af4d6c295369")]
 [assembly: System.Reflection.AssemblyProductAttribute("MissionLogService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MissionLogService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

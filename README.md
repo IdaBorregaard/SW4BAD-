@@ -57,3 +57,27 @@ Launch the API server:
 ├── Properties/      # Development profiles and launch settings
 ├── appsettings.json # Environment configurations and connection strings
 └── compose.yml      # Docker container orchestration
+
+
+
+Set id to 1 in the URL
+Add the Authorization header:
+
+Key: Authorization
+Value: Bearer <your token>
+
+
+Set the request body to { "status": 1 }
+Click Send
+Repeat with 2, 3, and 4
+
+
+#### Get token:
+{
+  "username": "manager1",
+  "password": "Manager1Pass!"
+}
+
+
+#### Token: 
+Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibWFuYWdlcjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjJjNDBmYTZhLTg3ZDctNGI0MC1hOWMyLTMyYmI1MzY2OGVmYSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6Ik1hbmFnZXIiLCJleHAiOjE3Nzc0OTE1ODQsImlzcyI6IkFhcmh1c1NwYWNlUHJvZ3JhbSIsImF1ZCI6IkFhcmh1c1NwYWNlUHJvZ3JhbSJ9.43_F4ZWdp9CD7IRd9PzQa5CMVxaoW4eCr-Gm9kOCWcI

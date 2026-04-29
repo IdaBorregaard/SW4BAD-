@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using assignment3.Data;
 using assignment3.Entities;
 using assignment3.DTO;
@@ -14,7 +15,7 @@ public static class LaunchpadEndpoints
     {   
 
         // Create a new launch pad
-        app.MapPost("/api/launchpads", async (LaunchPadCreateDTO createDTO, AarhusSpaceContext db)
+        app.MapPost("/api/launchpads", [Authorize(Roles = "Manager")] async (LaunchPadCreateDTO createDTO, AarhusSpaceContext db)
         =>{
             
             var newLaunchPad = new LaunchPad
@@ -53,7 +54,7 @@ public static class LaunchpadEndpoints
         });
 
         // Get a launch pad by ID
-        app.MapGet("/api/launchpads/{id}", async (string id, AarhusSpaceContext db) =>
+        app.MapGet("/api/launchpads/{id}", [Authorize] async (string id, AarhusSpaceContext db) =>
         {
             var launchPad = await db.LaunchPads
             .Where(l => l.LocationId == id)
@@ -69,7 +70,7 @@ public static class LaunchpadEndpoints
         });
 
         // Update existing launch pad
-        app.MapPut("/api/launchpads/{id}", async (string id, LaunchPadUpdateDTO updateDTO, AarhusSpaceContext db) =>
+        app.MapPut("/api/launchpads/{id}", [Authorize(Roles = "Manager")] async (string id, LaunchPadUpdateDTO updateDTO, AarhusSpaceContext db) =>
         {
             var launchPad = await db.LaunchPads
             .FirstOrDefaultAsync(l => l.LocationId == id);
@@ -86,7 +87,7 @@ public static class LaunchpadEndpoints
         });
 
         // Delete launch pad
-        app.MapDelete("/api/launchpads/{id}", async (string id, AarhusSpaceContext db) =>
+        app.MapDelete("/api/launchpads/{id}", [Authorize(Roles = "Manager")] async (string id, AarhusSpaceContext db) =>
         {
             var launchPad = await db.LaunchPads.FindAsync(id);
             if (launchPad is null)    {

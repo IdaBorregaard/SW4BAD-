@@ -6,6 +6,11 @@ using assignment3.Endpoints;
 using Scalar.AspNetCore;
 using Microsoft.Extensions.Options;
 using Serilog;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +34,36 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AarhusSpaceContext>(options =>
     options.UseSqlServer(connectionString));
 
+// Identity services: AddIdentity for handling user management, and specify that we want to use our AppUser class and IdentityRole for roles
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<AarhusSpaceContext>()
+    .AddDefaultTokenProviders();
+
+// JWT Authentication setup
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var secret = jwtSettings["Secret"]!; // The "!" tells the compiler that we are sure this value will not be null, since we have a default in appsettings.json
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
+    };
+});
+
+builder.Services.AddAuthorization(); // This is needed to use the [Authorize] attribute in endpoints
+
 var app = builder.Build();
 
 app.MapOpenApi("/openapi/v1.json");
@@ -40,6 +75,13 @@ if (app.Environment.IsDevelopment())
 }
 
 // CRUD endpoints for every entity
+
+// Authentication and Authorization middleware
+app.UseAuthentication();
+app.UseAuthorization();
+
+// CRUD endpoints for login
+app.MapAuthEndpoints();
 
 // CRUD endpoints for managers
 app.MapManagerEndpoints();
@@ -62,6 +104,9 @@ app.MapMissionsEndpoints();
 // CRUD endpoints for celestial bodies
 app.MapBodiesEndpoints();
 
+// CRUD endpoints for Experiments
+app.MapExperimentEndpoints();
+
 
 // Custom Middleware to log POST, PUT, DELETE requests
 app.Use(async (context, next) =>
@@ -82,5 +127,12 @@ app.Use(async (context, next) =>
     }
 });
 
+// Seed users and roles
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    await SeedUsers.SeedAsync(userManager, roleManager);
+}
 
 app.Run();

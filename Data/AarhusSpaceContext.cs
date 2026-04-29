@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using assignment3.Entities;
 
 namespace assignment3.Data;
@@ -7,7 +8,7 @@ namespace assignment3.Data;
 This class represents the database context for the Aarhus Space program. 
 It defines the DbSets for each entity and configures the relationships and seed data.
 */
-public class AarhusSpaceContext : DbContext
+public class AarhusSpaceContext : IdentityDbContext<AppUser>
 {
     // Constructor to pass options to the base DbContext
     public AarhusSpaceContext(DbContextOptions<AarhusSpaceContext> options)
@@ -24,11 +25,14 @@ public class AarhusSpaceContext : DbContext
     public DbSet<Mission> Missions { get; set; } = null!;
     public DbSet<Rocket> Rockets { get; set; } = null!;
     public DbSet<Scientist> Scientists { get; set; } = null!;
+    public DbSet<Experiment> Experiments {get; set;} = null!;
 
 
     // Relations and seeding
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder); // Call the base method to ensure Identity tables are configured
+
         // Staff - 1:1 relationer til Manager, Astronaut og Scientist
         modelBuilder.Entity<Staff>()
              .HasOne(s => s.ManagerDetails)

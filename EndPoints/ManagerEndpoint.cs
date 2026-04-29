@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using assignment3.Data;
 using assignment3.Entities;
 using assignment3.DTO;
@@ -15,7 +16,7 @@ public static class ManagerEndpoints
     {
 
         // Create a new manage
-        app.MapPost("/api/managers", async (ManagerCreateDTO createDTO, AarhusSpaceContext db)
+        app.MapPost("/api/managers", [Authorize(Roles = "Manager")] async (ManagerCreateDTO createDTO, AarhusSpaceContext db)
         =>
         {
             var newStaff = new Staff
@@ -47,7 +48,7 @@ public static class ManagerEndpoints
         });
 
         // Get all managers
-        app.MapGet("/api/managers", async (AarhusSpaceContext db) =>
+        app.MapGet("/api/managers", [Authorize] async (AarhusSpaceContext db) =>
         {
             var managers = await db.Managers
             .Select(m => new ManagerDTO
@@ -63,7 +64,7 @@ public static class ManagerEndpoints
         });
 
         // Get a manager by ID
-        app.MapGet("/api/managers/{id}", async (int id, AarhusSpaceContext db) =>
+        app.MapGet("/api/managers/{id}", [Authorize] async (int id, AarhusSpaceContext db) =>
         {
             var manager = await db.Managers
             .Where(m => m.StaffId == id)
@@ -81,7 +82,7 @@ public static class ManagerEndpoints
         });
 
         // Update existing manager
-        app.MapPut("/api/managers/{id}", async (int id, ManagerUpdateDTO updateDTO, AarhusSpaceContext db) =>
+        app.MapPut("/api/managers/{id}", [Authorize(Roles = "Manager")] async (int id, ManagerUpdateDTO updateDTO, AarhusSpaceContext db) =>
         {
             var manager = await db.Managers
             .Include(m => m.Staff)
@@ -102,7 +103,7 @@ public static class ManagerEndpoints
         });
 
         // Delete manager
-        app.MapDelete("/api/managers/{id}", async (int id, AarhusSpaceContext db) =>
+        app.MapDelete("/api/managers/{id}", [Authorize(Roles = "Manager")] async (int id, AarhusSpaceContext db) =>
         {
             var staff = await db.Staff.FindAsync(id);
             if (staff is null)

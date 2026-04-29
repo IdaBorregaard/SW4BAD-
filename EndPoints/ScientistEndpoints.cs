@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using assignment3.Data;
 using assignment3.Entities;
 using assignment3.DTO;
@@ -15,7 +16,7 @@ public static class ScientistEndpoints
     {
 
         // Create a new scientist
-        app.MapPost("/api/scientists", async (ScientistCreateDTO createDTO, AarhusSpaceContext db)
+        app.MapPost("/api/scientists", [Authorize(Roles = "Manager")] async (ScientistCreateDTO createDTO, AarhusSpaceContext db)
         =>
         {
             var newStaff = new Staff
@@ -48,7 +49,7 @@ public static class ScientistEndpoints
         });
 
         // Get all scientists
-        app.MapGet("/api/scientists", async (AarhusSpaceContext db) =>
+        app.MapGet("/api/scientists", [Authorize] async (AarhusSpaceContext db) =>
         {
             var scientists = await db.Scientists
             .Select(s => new ScientistDTO
@@ -65,7 +66,7 @@ public static class ScientistEndpoints
         });
 
         // Get a scientist by ID
-        app.MapGet("/api/scientists/{id}", async (int id, AarhusSpaceContext db) =>
+        app.MapGet("/api/scientists/{id}", [Authorize] async (int id, AarhusSpaceContext db) =>
         {
             var scientist = await db.Scientists
             .Where(s => s.StaffId == id)
@@ -84,7 +85,7 @@ public static class ScientistEndpoints
         });
 
         // Update existing scientist
-        app.MapPut("/api/scientists/{id}", async (int id, ScientistUpdateDTO updateDTO, AarhusSpaceContext db) =>
+        app.MapPut("/api/scientists/{id}", [Authorize(Roles = "Manager")] async (int id, ScientistUpdateDTO updateDTO, AarhusSpaceContext db) =>
         {
             var scientist = await db.Scientists
             .Include(s => s.Staff)
@@ -106,7 +107,7 @@ public static class ScientistEndpoints
         });
 
         // Delete scientist
-        app.MapDelete("/api/scientists/{id}", async (int id, AarhusSpaceContext db) =>
+        app.MapDelete("/api/scientists/{id}", [Authorize(Roles = "Manager")] async (int id, AarhusSpaceContext db) =>
         {
             var staff = await db.Staff.FindAsync(id);
             if (staff is null)

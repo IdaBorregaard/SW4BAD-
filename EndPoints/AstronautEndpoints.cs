@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using assignment3.Data;
 using assignment3.Entities;
 using assignment3.DTO;
@@ -15,7 +16,7 @@ public static class AstronautEndpoints
     {
 
 // Create a new astronaut
-app.MapPost("/api/astronauts", async (AstronautCreateDTO createDTO, AarhusSpaceContext db)
+app.MapPost("/api/astronauts", [Authorize(Roles = "Manager")] async (AstronautCreateDTO createDTO, AarhusSpaceContext db)
 =>{
     var newStaff = new Staff
     {
@@ -89,7 +90,7 @@ app.MapGet("/api/astronauts/{id}", async (int id, AarhusSpaceContext db) =>
 });
 
 // Update existing astronaut
-app.MapPut("/api/astronauts/{id}", async (int id, AstronautUpdateDTO updateDTO, AarhusSpaceContext db) =>
+app.MapPut("/api/astronauts/{id}", [Authorize(Roles = "Manager")] async (int id, AstronautUpdateDTO updateDTO, AarhusSpaceContext db) =>
 {
     var astronaut = await db.Astronauts
     .Include(a => a.Staff)
@@ -111,7 +112,7 @@ app.MapPut("/api/astronauts/{id}", async (int id, AstronautUpdateDTO updateDTO, 
 });
 
 // Delete astronaut
-app.MapDelete("/api/astronauts/{id}", async (int id, AarhusSpaceContext db) =>
+app.MapDelete("/api/astronauts/{id}", [Authorize(Roles = "Manager")] async (int id, AarhusSpaceContext db) =>
 {
     var staff = await db.Staff.FindAsync(id);
     if (staff is null)    {

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using assignment3.Data;
 using assignment3.Entities;
 using assignment3.DTO;
@@ -14,7 +15,7 @@ public static class MissionEndpoints
     public static void MapMissionsEndpoints(this IEndpointRouteBuilder app)
     {
         // Create a new mission
-        app.MapPost("/api/missions", async (MissionCreateDTO createDTO, AarhusSpaceContext db)
+        app.MapPost("/api/missions", [Authorize(Roles = "Manager")] async (MissionCreateDTO createDTO, AarhusSpaceContext db)
         =>
         {
             // Fetch hardware and validate existence
@@ -113,39 +114,41 @@ public static class MissionEndpoints
         });
 
         // [GET] Get all missions
-        app.MapGet("/api/missions", async (AarhusSpaceContext db) =>
-{
-    var missions = await db.Missions
-        .Include(m => m.Crew)        // Tell EF to join the Astronauts table
-        .Include(m => m.Scientists)  // Tell EF to join the Scientists table
-        .Include(m => m.ManagedBy)   // Tell EF to join the Managers table
-        .Select(m => new MissionDTO
+        app.MapGet("/api/missions", async (AarhusSpaceContext db, string? status) =>
         {
-            MissionId = m.MissionId,
-            Name = m.Name,
-            LaunchDate = m.LaunchDate,
-            LaunchLocation = m.LaunchLocation,
-            Status = m.Status,
-            RocketId = m.RocketId,
-            RocketName = m.Rocket != null ? m.Rocket.Name : "Unassigned",
-            CelestialDest = m.CelestialDest,
+            var query = db.Missions
+                .Include(m => m.Crew)
+                .Include(m => m.Scientists)
+                .Include(m => m.ManagedBy)
+                .AsQueryable();
 
-            ManagerName = m.ManagedBy != null && m.ManagedBy.Staff != null ? m.ManagedBy.Staff.Name : "Unassigned",
-            // AstronautNames = m.Crew.Select(a => a.Staff != null ? a.Staff.Name : "Unassigned").ToList(),
-            // ScientistNames = m.Scientists.Select(s => s.Staff != null ? s.Staff.Name : "Unassigned").ToList(),
+            if (!string.IsNullOrEmpty(status) && Enum.TryParse<MissionStatus>(status, out var parsedStatus))
+            {
+                query = query.Where(m => m.Status == parsedStatus);
+            }
 
-            // // And the IDs for the developers:
-            ManagerId = m.ManagerId,
-            // AstronautIds = m.Crew.Select(a => a.StaffId).ToList(),
-            // ScientistIds = m.Scientists.Select(s => s.StaffId).ToList()
-        })
-        .ToListAsync();
+            var missions = await query.Select(m => new MissionDTO
+            {
+                MissionId = m.MissionId,
+                Name = m.Name,
+                LaunchDate = m.LaunchDate,
+                LaunchLocation = m.LaunchLocation,
+                Status = m.Status,
+                RocketId = m.RocketId,
+                RocketName = m.Rocket != null ? m.Rocket.Name : "Unassigned",
+                CelestialDest = m.CelestialDest,
+                ManagerName = m.ManagedBy != null && m.ManagedBy.Staff != null ? m.ManagedBy.Staff.Name : "Unassigned",
+                ManagerId = m.ManagerId,
+            })
+            .ToListAsync();
 
-    return Results.Ok(missions);
-});
+            return Results.Ok(missions);
+        });
+
+
 
         // [GET] Get a mission by ID
-        app.MapGet("/api/missions/{id}", async (int id, AarhusSpaceContext db) =>
+        app.MapGet("/api/missions/{id}", [Authorize] async (int id, AarhusSpaceContext db) =>
         {
             var mission = await db.Missions
                 .Where(m => m.MissionId == id)
@@ -175,8 +178,10 @@ public static class MissionEndpoints
             return Results.Ok(mission.FirstOrDefault());
         });
 
+
+
         // [GET] Get a mission by target celestial body
-        app.MapGet("/api/missions/destination/{celestialDest}", async (string celestialDest, AarhusSpaceContext db) =>
+        app.MapGet("/api/missions/destination/{celestialDest}", [Authorize] async (string celestialDest, AarhusSpaceContext db) =>
         {
             var missions = await db.Missions
             .Where(m => m.CelestialDest == celestialDest)
@@ -208,7 +213,7 @@ public static class MissionEndpoints
 
 
         // [PUT] Update Mission Status
-        app.MapPut("/api/missions/{id}", async (int id, MissionUpdateDTO updateDTO, AarhusSpaceContext db) =>
+        app.MapPut("/api/missions/{id}", [Authorize(Roles = "Manager")] async (int id, MissionUpdateDTO updateDTO, AarhusSpaceContext db) =>
         {
             var mission = await db.Missions.FindAsync(id);
             if (mission == null) return Results.NotFound($"Mission with ID {id} not found.");
@@ -240,7 +245,7 @@ public static class MissionEndpoints
         });
 
         // [PUT] Assign, Manager, Astronaut or Scientist to a Mission
-        app.MapPut("/api/missions/{missionId}/Staff", async (int missionId, AssignStaffDTO assignDTO, AarhusSpaceContext db) =>
+        app.MapPut("/api/missions/{missionId}/Staff", [Authorize(Roles = "Manager")] async (int missionId, AssignStaffDTO assignDTO, AarhusSpaceContext db) =>
         {
             var mission = await db.Missions
                 .Include(m => m.Crew)
@@ -287,7 +292,7 @@ public static class MissionEndpoints
 
 
         // [DELETE] Remove staff from a mission (e.g., unassign an astronaut or scientist)
-        app.MapDelete("/api/missions/{missionId}/Staff/{staffId}", async (int missionId, int staffId, AarhusSpaceContext db) =>
+        app.MapDelete("/api/missions/{missionId}/Staff/{staffId}", [Authorize(Roles = "Manager")] async (int missionId, int staffId, AarhusSpaceContext db) =>
         {
             var mission = await db.Missions
                 .Include(m => m.Crew)

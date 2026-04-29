@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using assignment3.Data;
 using assignment3.Entities;
 using assignment3.DTO;
@@ -15,7 +16,7 @@ public static class BodiesEndpoints
     {
         
         // Create a new celestial body
-        app.MapPost("/api/bodies", async (CelestialBodyCreateDTO createDTO, AarhusSpaceContext db)
+        app.MapPost("/api/bodies", [Authorize(Roles = "Manager")] async (CelestialBodyCreateDTO createDTO, AarhusSpaceContext db)
         =>{
             var newBody = new CelestialBody
             {
@@ -39,7 +40,7 @@ public static class BodiesEndpoints
         });
 
         // Get all celestial bodies
-        app.MapGet("/api/bodies", async (AarhusSpaceContext db) =>
+        app.MapGet("/api/bodies", [Authorize] async (AarhusSpaceContext db) =>
         {
             var bodies = await db.Bodies
             .Select(b => new CelestialBodyDTO
@@ -54,7 +55,7 @@ public static class BodiesEndpoints
         });
 
         // Get a celestial body by ID
-        app.MapGet("/api/bodies/{id}", async (string id, AarhusSpaceContext db) =>
+        app.MapGet("/api/bodies/{id}", [Authorize] async (string id, AarhusSpaceContext db) =>
         {
             var body = await db.Bodies
             .Where(b => b.Name == id)
@@ -71,7 +72,7 @@ public static class BodiesEndpoints
         });
 
         // Update existing celestial body
-        app.MapPut("/api/bodies/{id}", async (string id, CelestialBodyUpdateDTO updateDTO, AarhusSpaceContext db) =>
+        app.MapPut("/api/bodies/{id}", [Authorize(Roles = "Manager")] async (string id, CelestialBodyUpdateDTO updateDTO, AarhusSpaceContext db) =>
         {
             var body = await db.Bodies
             .FirstOrDefaultAsync(b => b.Name == id);
@@ -90,7 +91,7 @@ public static class BodiesEndpoints
         });
 
         // Delete celestial body
-        app.MapDelete("/api/bodies/{id}", async (string id, AarhusSpaceContext db) =>
+        app.MapDelete("/api/bodies/{id}", [Authorize(Roles = "Manager")] async (string id, AarhusSpaceContext db) =>
         {
             var body = await db.Bodies.FindAsync(id);
             if (body is null)    {

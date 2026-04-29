@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using assignment3.Data;
 using assignment3.Entities;
 using assignment3.DTO;
@@ -15,7 +16,7 @@ public static class RocketEndpoints
     {
 
         // Create a new rocket
-        app.MapPost("/api/rockets", async (RocketCreateDTO createDTO, AarhusSpaceContext db)
+        app.MapPost("/api/rockets", [Authorize(Roles = "Manager")] async (RocketCreateDTO createDTO, AarhusSpaceContext db)
         =>
         {
             if (createDTO.Weight < 0)
@@ -54,7 +55,7 @@ public static class RocketEndpoints
         });
 
         // Get all rockets
-        app.MapGet("/api/rockets", async (AarhusSpaceContext db) =>
+        app.MapGet("/api/rockets", [Authorize] async (AarhusSpaceContext db) =>
         {
             var rockets = await db.Rockets
             .Select(r => new RocketDTO
@@ -72,7 +73,7 @@ public static class RocketEndpoints
         });
 
         // Get a rocket by ID
-        app.MapGet("/api/rockets/{id}", async (string id, AarhusSpaceContext db) =>
+        app.MapGet("/api/rockets/{id}", [Authorize] async (string id, AarhusSpaceContext db) =>
         {
             var rocket = await db.Rockets
             .Where(r => r.RocketId == id)
@@ -92,7 +93,7 @@ public static class RocketEndpoints
         });
 
         // Update existing rocket
-        app.MapPut("/api/rockets/{id}", async (string id, RocketUpdateDTO updateDTO, AarhusSpaceContext db) =>
+        app.MapPut("/api/rockets/{id}", [Authorize(Roles = "Manager")] async (string id, RocketUpdateDTO updateDTO, AarhusSpaceContext db) =>
         {
             var rocket = await db.Rockets
             .FirstOrDefaultAsync(r => r.RocketId == id);
@@ -119,7 +120,7 @@ public static class RocketEndpoints
         });
 
         // Delete rocket
-        app.MapDelete("/api/rockets/{id}", async (string id, AarhusSpaceContext db) =>
+        app.MapDelete("/api/rockets/{id}", [Authorize(Roles = "Manager")] async (string id, AarhusSpaceContext db) =>
         {
             var rocket = await db.Rockets.FindAsync(id);
             if (rocket is null)
